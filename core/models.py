@@ -75,3 +75,25 @@ class Recurso(Base):
     
     def __str__(self):
         return self.nome
+
+class Cliente(Base):
+    STAR_CHOICES = {
+        ('1', '1 estrela'),
+        ('2', '2 estrelas'),
+        ('3', '3 estrelas'),
+        ('4', '4 estrelas'),
+        ('5', '5 estrelas'),
+    }
+
+    nome = models.CharField('Nome', max_length=100)
+    cargo = models.ForeignKey('core.cargo', verbose_name='Cargo', on_delete=models.CASCADE)
+    avaliacao = models.TextField('Avaliação', max_length=200)
+    estrelas = models.CharField('Estrelas', max_length=12, choices=STAR_CHOICES)
+    imagem = StdImageField('Imagem', upload_to='clientes', variations={'thumb': {'width': 100, 'height': 100, 'crop': True}})
+
+    class Meta:
+        verbose_name = 'Cliente'
+        verbose_name_plural = 'Clientes'
+    
+    def __str__(self):
+        return self.nome
